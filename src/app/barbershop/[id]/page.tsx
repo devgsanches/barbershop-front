@@ -2,10 +2,14 @@
 
 import { PhoneItem } from '@/app/_components/PhoneItem'
 import { ServiceItem } from '@/app/_components/ServiceItem'
+import { SidebarSheet } from '@/app/_components/SidebarSheet'
+import { Button } from '@/app/_components/ui/button'
+import { Sheet, SheetTrigger } from '@/app/_components/ui/sheet'
 import type { Barbershop } from '@/app/page'
 import { api } from '@/services/api'
-import { Map, Star } from 'lucide-react'
+import { ChevronLeft, Map, Menu, Star } from 'lucide-react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useEffect, useState, useCallback } from 'react'
 
 export default function BarbershopPage({ params }: { params: { id: string } }) {
@@ -42,6 +46,28 @@ export default function BarbershopPage({ params }: { params: { id: string } }) {
           className="min-h-[15.625rem] min-w-[24.375rem] object-cover"
           priority
         />
+        <Button
+          size={'icon'}
+          variant={'outline'}
+          className="absolute left-4 top-4"
+          asChild
+        >
+          <Link href="/">
+            <ChevronLeft />
+          </Link>
+        </Button>
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button
+              size={'icon'}
+              variant={'outline'}
+              className="absolute right-4 top-4"
+            >
+              <Menu />
+            </Button>
+          </SheetTrigger>
+          <SidebarSheet />
+        </Sheet>
       </div>
 
       {/* TITLE */}
@@ -77,11 +103,9 @@ export default function BarbershopPage({ params }: { params: { id: string } }) {
         <div className="space-y-3 p-5">
           {barbershop.services.map((service) => (
             <ServiceItem
+              service={service}
+              barbershop={barbershop}
               key={service.name}
-              imageUrl={service.imageUrl}
-              name={service.name}
-              description={service.description}
-              price={service.price}
             />
           ))}
         </div>

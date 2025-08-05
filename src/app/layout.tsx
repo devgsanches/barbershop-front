@@ -4,6 +4,7 @@ import './globals.css'
 import { Nunito } from 'next/font/google'
 import { Toaster } from './_components/ui/sonner'
 import { Footer } from './_components/Footer'
+import { AuthProvider } from '@/providers/authProvider'
 
 const geistSans = localFont({
   src: './_fonts/GeistVF.woff',
@@ -34,12 +35,16 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="pt-BR" className="dark">
+    <html lang="en" className="dark">
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${nunito.variable} bg-background font-nunito text-foreground antialiased`}
       >
-        {children}
-        <Footer />
+        <AuthProvider>
+          <div className="flex h-full flex-col">
+            <div className="flex-1">{children}</div>
+            <Footer />
+          </div>
+        </AuthProvider>
         <Toaster />
       </body>
     </html>
